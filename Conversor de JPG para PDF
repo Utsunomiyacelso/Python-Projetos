@@ -1,0 +1,34 @@
+import os
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+from PIL import Image
+
+def criar_pdf(nome_pasta):
+    # Criar um novo arquivo PDF
+    pdf_filename = f"{nome_pasta}.pdf"
+    c = canvas.Canvas   (pdf_filename, pagesize=letter)
+    
+    # Obter a lista de imagens na pasta
+    imagens = [img for img in os.listdir(nome_pasta) if img.endswith(".jpg")]
+    
+    # Ordenar as imagens alfabeticamente
+    imagens.sort()
+    
+    # Adicionar cada imagem ao PDF
+    for imagem in imagens:
+        img_path = os.path.join(nome_pasta, imagem)
+        c.drawImage(img_path, 0, 0, width=letter[0], height=letter[1])
+        c.showPage()
+    
+    # Fechar o arquivo PDF
+    c.save()
+
+# Diretório onde estão as pastas com as imagens
+diretorio_principal = ("PASTA PARA SALVAR OS ARQUIVOS")
+
+# Iterar sobre todas as pastas no diretório principal
+for pasta in os.listdir(diretorio_principal):
+    pasta_path = os.path.join(diretorio_principal, pasta)
+    if os.path.isdir(pasta_path):
+        criar_pdf(pasta_path)
+ 
