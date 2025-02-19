@@ -1,0 +1,33 @@
+SELECT 
+  c.customerkey AS [CustomerKey], 
+
+  c.firstname AS [FirstName], 
+
+  c.lastname as [LastName], 
+  c.FirstName + ' ' + LastName AS [Full Name] --Junção do primeiro nome com o último 
+  [Gender], 
+  CASE c.Gender WHEN 'M' THEN 'MALE' WHEN 'F' THEN 'FAMALE' END AS GENERO, 
+
+
+  /*  ,[YearlyIncome]
+        ,[TotalChildren]
+        ,[NumberChildrenAtHome]
+        ,[EnglishEducation]
+        ,[SpanishEducation]
+        ,[FrenchEducation]
+        ,[EnglishOccupation]
+        ,[SpanishOccupation]
+        ,[FrenchOccupation]
+        ,[HouseOwnerFlag]
+        ,[NumberCarsOwned]
+        ,[AddressLine1]
+        ,[AddressLine2]
+        ,[Phone]*/
+  [DateFirstPurchase] AS 'First Purchase', 
+  --,[CommuteDistance]
+  g.city AS [Customer City] 
+from 
+  dbo.DimCustomer AS c 
+  LEFT JOIN dbo.dimgeography AS g ON G.GEOGRAPHYKEY = c.geographykey 
+ORDER BY 
+  CustomerKey ASC
